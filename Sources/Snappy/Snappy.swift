@@ -2,6 +2,7 @@ import struct Foundation.Data
 
 import SnappyC
 
+/// Snappy Compression for Data.
 public extension Data {
     /// Compresses the given Data using Snappy.
     ///
@@ -47,6 +48,7 @@ public extension Data {
     }
 }
 
+/// Snappy Compression for String.
 public extension String {
     /// Compresses the given String using Snappy.
     ///
