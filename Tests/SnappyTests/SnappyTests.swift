@@ -19,14 +19,6 @@ final class SnappyTests: XCTestCase {
         let data = testString.data(using: .utf8)
         let compressedData = try XCTUnwrap(data?.compressedUsingSnappy())
 
-        if #available(macOS 13.0, *) {
-            let path = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0].appending(component: "compressedFile")
-
-            try compressedData.write(to: path)
-        } else {
-            // Fallback on earlier versions
-        }
-
         let uncompressedData = try XCTUnwrap(compressedData.uncompressedUsingSnappy())
         let uncompressedString = String(data: uncompressedData, encoding: .utf8)
         XCTAssertEqual(uncompressedString, testString)
