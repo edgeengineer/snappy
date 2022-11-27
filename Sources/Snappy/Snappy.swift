@@ -15,13 +15,12 @@ public extension Data {
         var environment = snappy_env()
         snappy_init_env(&environment)
         let compressedDataBuffer = self.withUnsafeBytes {
-            let compressedDataBuffer = malloc(compressedDataLength)
+            let compressedDataBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: compressedDataLength)
             let error = snappy_compress(&environment, $0.baseAddress, self.count, compressedDataBuffer, &compressedDataLength)
             debugPrint(error)
             return compressedDataBuffer
         }
         snappy_free_env(&environment)
-        guard let compressedDataBuffer else { return nil }
         return Data(bytesNoCopy: compressedDataBuffer, count: compressedDataLength, deallocator: .none)
     }
 
@@ -39,12 +38,11 @@ public extension Data {
             return uncompressedDataLength
         }
         let uncompressedDataBuffer = self.withUnsafeBytes {
-            let uncompressedDataBuffer = malloc(uncompressedDataLength)
+            let uncompressedDataBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: uncompressedDataLength)
             let error = snappy_uncompress($0.baseAddress, self.count, uncompressedDataBuffer)
             debugPrint(error)
             return uncompressedDataBuffer
         }
-        guard let uncompressedDataBuffer else { return nil }
         return Data(bytesNoCopy: uncompressedDataBuffer, count: uncompressedDataLength, deallocator: .none)
     }
 }
