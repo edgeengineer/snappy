@@ -9,14 +9,12 @@ CFLAGS ?= -Wall -g -O2 -DNDEBUG=1  -DSG=1 -fPIC
 # download it somewhere and point to it
 KDOC := /usr/src/linux/scripts/kernel-doc
 
-all: scmd verify libsnappyc.so.1
+all: libsnappyc.so.1
 
 snappy.o: snappy.c compat.h snappy-int.h
 
-scmd: scmd.o snappy.o map.o util.o
-
-CLEAN := scmd.o snappy.o scmd bench bench.o fuzzer.o fuzzer map.o verify.o \
-	 verify util.o snappy.html snappy.man libsnappyc.so.1
+CLEAN := snappy.o map.o \
+	 snappy.html snappy.man libsnappyc.so.1
 
 clean: 
 	rm -f ${CLEAN}
@@ -48,16 +46,6 @@ OTHER := ${LZO} ../comp/zlib.o ../comp/lzf.o ../comp/quicklz.o \
 #           ${SNAPREF_BASE}/snappy-sinksource.o \
 #           ${SNAPREF_BASE}/snappy-stubs-internal.o \
 LDFLAGS += -lstdc++
-
-fuzzer.o: CFLAGS += -D COMP ${SNAPREF_FL}
-
-fuzzer: fuzzer.o map.o util.o snappy.o ${OTHER} # ${SNAPREF}
-
-bench: bench.o map.o snappy.o util.o ${OTHER} # ${SNAPREF}
-
-bench.o: CFLAGS += -I ../simple-pmu -D COMP # ${SNAPREF_FL}  # -D SIMPLE_PMU
-
-verify: verify.o map.o snappy.o util.o
 
 FTRACER := ../ftracer/ftracer.o
 
