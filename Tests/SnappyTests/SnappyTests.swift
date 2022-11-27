@@ -23,4 +23,16 @@ final class SnappyTests: XCTestCase {
         let uncompressedString = String(data: uncompressedData, encoding: .utf8)
         XCTAssertEqual(uncompressedString, testString)
     }
+
+    @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
+    func testSimpleDataAsync() async throws {
+        let data = testString.data(using: .utf8)
+        let optionalCompressedData = await data?.compressedUsingSnappy()
+        let compressedData = try XCTUnwrap(optionalCompressedData)
+
+        let optionalUncompressedData = await compressedData.uncompressedUsingSnappy()
+        let uncompressedData = try XCTUnwrap(optionalUncompressedData)
+        let uncompressedString = String(data: uncompressedData, encoding: .utf8)
+        XCTAssertEqual(uncompressedString, testString)
+    }
 }
