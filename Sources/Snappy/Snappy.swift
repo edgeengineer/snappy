@@ -1,5 +1,5 @@
 import struct Foundation.Data
-import struct System.Errno
+import struct SystemPackage.Errno
 
 import SnappyC
 
