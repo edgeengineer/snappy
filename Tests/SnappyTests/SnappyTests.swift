@@ -39,4 +39,35 @@ final class SnappyTests: XCTestCase {
         let uncompressedString = String(data: uncompressedData, encoding: .utf8)
         XCTAssertEqual(uncompressedString, testString)
     }
+
+    func testSimpleDataResult() throws {
+        let data = try XCTUnwrap(testString.data(using: .utf8))
+        let compressionResult = data.compressedUsingSnappyWithResult()
+        switch compressionResult {
+        case .success(let compressedData):
+            let uncompressionResult = compressedData.uncompressedUsingSnappyWithResult()
+            switch uncompressionResult {
+            case .success(let uncompressedData):
+                XCTAssertEqual(String(data: uncompressedData, encoding: .utf8), testString)
+            case .failure(let error):
+                XCTFail("Error \"\(error)\" occurred in uncompression")
+            }
+        case .failure(let error):
+            XCTFail("Error \"\(error)\" occurred in compression")
+        }
+    }
+
+    func testSimpleDataThrowing() throws {
+        let data = try XCTUnwrap(testString.data(using: .utf8))
+        let compressedData = try data.compressedUsingSnappy()
+        let uncompressedData = try compressedData.uncompressedUsingSnappy()
+        XCTAssertEqual(String(data: uncompressedData, encoding: .utf8), testString)
+    }
+
+    func testSimpleDataAsync() async throws {
+        let data = try XCTUnwrap(testString.data(using: .utf8))
+        let compressedData = try await data.compressedUsingSnappy()
+        let uncompressedData = try await compressedData.uncompressedUsingSnappy()
+        XCTAssertEqual(String(data: uncompressedData, encoding: .utf8), testString)
+    }
 }
