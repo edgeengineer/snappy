@@ -19,6 +19,8 @@ let package = Package(
         .target(name: "Snappy", dependencies: ["SnappyC", .product(name: "SystemPackage", package: "swift-system")]),
         .testTarget(
             name: "SnappyTests",
-            dependencies: ["Snappy"]),
+            dependencies: ["Snappy"],
+            resources: [.process("Data")]
+        ),
     ]
 )
