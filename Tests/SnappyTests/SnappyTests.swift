@@ -82,41 +82,80 @@ final class SnappyTests: XCTestCase {
     }
 
     func testBadData1ShouldFail() throws {
-        let badDataFilePath = try XCTUnwrap(Bundle.module.path(forResource: "baddata1", ofType: "snappy"))
-        let badDataFileURL = URL(fileURLWithPath: badDataFilePath)
-        let badData = try Data(contentsOf: badDataFileURL)
-        XCTAssertThrowsError(try badData.uncompressedUsingSnappy()) { error in
-            guard let error = error as? Errno else {
-                XCTFail("Invalid error thrown")
-                return
-            }
-            XCTAssertEqual(error, Errno(rawValue: 5))
-        }
+        try compressWithFailure(XCTUnwrap(Bundle.module.path(forResource: "baddata1", ofType: "snappy")), shouldFailWith: 5)
     }
 
     func testBadData2ShouldFail() throws {
-        let badDataFilePath = try XCTUnwrap(Bundle.module.path(forResource: "baddata2", ofType: "snappy"))
-        let badDataFileURL = URL(fileURLWithPath: badDataFilePath)
-        let badData = try Data(contentsOf: badDataFileURL)
-        XCTAssertThrowsError(try badData.uncompressedUsingSnappy()) { error in
-            guard let error = error as? Errno else {
-                XCTFail("Invalid error thrown")
-                return
-            }
-            XCTAssertEqual(error, Errno(rawValue: 5))
-        }
+        try compressWithFailure(XCTUnwrap(Bundle.module.path(forResource: "baddata2", ofType: "snappy")), shouldFailWith: 5)
     }
 
     func testBadData3ShouldFail() throws {
-        let badDataFilePath = try XCTUnwrap(Bundle.module.path(forResource: "baddata3", ofType: "snappy"))
-        let badDataFileURL = URL(fileURLWithPath: badDataFilePath)
-        let badData = try Data(contentsOf: badDataFileURL)
+        try compressWithFailure(XCTUnwrap(Bundle.module.path(forResource: "baddata3", ofType: "snappy")), shouldFailWith: 5)
+    }
+
+    func testAliceInWonderland() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "alice29", ofType: "txt")))
+    }
+
+    func testAsYouLike() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "asyoulik", ofType: "txt")))
+    }
+
+    func testFireworks() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "fireworks", ofType: "jpeg")))
+    }
+
+    func testGeoProtoData() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "geo", ofType: "protodata")))
+    }
+
+    func testHtml() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "html", ofType: "")))
+    }
+
+    func testHtmlX4() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "html_x_4", ofType: "")))
+    }
+
+    func testKppkn() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "kppkn", ofType: "gtb")))
+    }
+
+    func testLcet10() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "lcet10", ofType: "txt")))
+    }
+
+    func testPaper100k() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "paper-100k", ofType: "pdf")))
+    }
+
+    func testPlarbn12() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "plrabn12", ofType: "txt")))
+    }
+
+    func testUrls() throws {
+        try compressAndUncompress(XCTUnwrap(Bundle.module.path(forResource: "urls", ofType: "10K")))
+    }
+
+    // MARK: Helper
+
+    func compressAndUncompress(_ resourcePath: String) throws {
+        let uncompressedFileURL = URL(fileURLWithPath: resourcePath)
+        let originalData = try Data(contentsOf: uncompressedFileURL)
+        let compressedData = try originalData.compressedUsingSnappy()
+        let uncompressedData = try compressedData.uncompressedUsingSnappy()
+        XCTAssertEqual(originalData, uncompressedData)
+    }
+
+    func compressWithFailure(_ resourcePath: String, shouldFailWith errorNumber: CInt) throws {
+        let fileURL = URL(fileURLWithPath: resourcePath)
+        let badData = try Data(contentsOf: fileURL)
         XCTAssertThrowsError(try badData.uncompressedUsingSnappy()) { error in
             guard let error = error as? Errno else {
                 XCTFail("Invalid error thrown")
                 return
             }
-            XCTAssertEqual(error, Errno(rawValue: 5))
+            XCTAssertEqual(error, Errno(rawValue: errorNumber))
         }
     }
 }
