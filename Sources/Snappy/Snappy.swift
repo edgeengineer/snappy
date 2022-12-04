@@ -15,8 +15,7 @@ public extension Data {
         let result: (buffer: UnsafeMutablePointer<Int8>, error: Int32) = self.withUnsafeBytes {
             let compressedDataBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: compressedDataLength)
             let error = snappy_compress(&environment, $0.baseAddress, self.count, compressedDataBuffer, &compressedDataLength)
-            debugPrint(error)
-            return (compressedDataBuffer, error)
+            return (compressedDataBuffer, abs(error))
         }
         snappy_free_env(&environment)
         return (Data(bytesNoCopy: result.buffer, count: compressedDataLength, deallocator: .none), result.error)
@@ -107,8 +106,7 @@ public extension Data {
         let result: (buffer: UnsafeMutablePointer<Int8>, error: Int32) = self.withUnsafeBytes {
             let uncompressedDataBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: uncompressedDataLength)
             let error = snappy_uncompress($0.baseAddress, self.count, uncompressedDataBuffer)
-            debugPrint(error)
-            return (uncompressedDataBuffer, error)
+            return (uncompressedDataBuffer, abs(error))
         }
         return (Data(bytesNoCopy: result.buffer, count: uncompressedDataLength, deallocator: .none), result.error)
     }
