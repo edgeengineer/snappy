@@ -13,14 +13,14 @@ Snappy has the following properties:
 - Fast: Compression speeds at 250 MB/sec and beyond, with no assembler code. See "Performance" below.
 - Stable: Over the last few years, Snappy has compressed and decompressed petabytes of data in Google's production environment. The Snappy bitstream format is stable and will not change between versions.
 - Robust: The Snappy decompressor is designed not to crash in the face of corrupted or malicious input.
-- Free and open source software: Snappy is licensed under a BSD-type license. For more information, see the included COPYING file.
+- Free and open source software: Snappy is licensed under a BSD-type license. For more information, see the included LICENSE file.
 
 Snappy has previously been called "Zippy" in some Google presentations and the like.
 
 ## Performance
 
 Snappy is intended to be fast. On a single core of a Core i7 processor in 64-bit mode, it compresses at about 250 MB/sec or more and decompresses at about 500 MB/sec or more. 
-(These numbers are for the slowest inputs in our benchmark suite; others are much faster.) 
+(These numbers are for the slowest inputs in Google's benchmark suite; others are much faster.) 
 In Google's tests, Snappy usually is faster than algorithms in the same class (e.g. LZO, LZF, QuickLZ, etc.) while achieving comparable compression ratios.
 
 Typical compression ratios (based on the benchmark suite) are about 1.5-1.7x for plain text, about 2-4x for HTML, and of course 1.0x for JPEGs, PNGs and other already-compressed data. 
