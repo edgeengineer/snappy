@@ -13,8 +13,7 @@ all: libsnappyc.so.1
 
 snappy.o: snappy.c compat.h snappy-int.h
 
-CLEAN := snappy.o map.o \
-	 snappy.html snappy.man libsnappyc.so.1
+CLEAN := snappy.o snappy.html snappy.man libsnappyc.so.1
 
 clean: 
 	rm -f ${CLEAN}
