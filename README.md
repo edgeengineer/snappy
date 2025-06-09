@@ -14,7 +14,7 @@ This is a fork of [swift-snappy](https://github.com/lovetodream/swift-snappy) by
 Add `Snappy` to the dependencies within your application's `Package.swift` file.
 
 ```swift
-.package(url: "https://github.com/edgeengineer/snappy.git", from: "1.0.0"),
+.package(url: "https://github.com/edgeengineer/snappy.git", from: "0.0.1"),
 ```
 
 Add `Snappy` to your target's dependencies.
