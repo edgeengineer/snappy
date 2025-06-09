@@ -1,6 +1,7 @@
 import Testing
-#if canImport(FoundationEssentials)
+#if canImport(FoundationEssentials) && !os(Linux)
 import FoundationEssentials
+import Foundation // Need Foundation for Bundle
 #else
 import Foundation
 #endif
