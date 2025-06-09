@@ -22,13 +22,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Pages
-      uses: actions/configure-pages@v1
+      uses: actions/configure-pages@v3
     - name: Set up Swift
-      uses: fwal/setup-swift@v1
+      uses: swiftlang/setup-swift@v1
       with:
-        swift-version: '5.7'
+        swift-version: '6.1'
     - name: Generate Docs
       uses: fwcd/swift-docc-action@v1
       with:
@@ -36,9 +36,9 @@ jobs:
         output: ./public
         transform-for-static-hosting: 'true'
         disable-indexing: 'true'
-        hosting-base-path: swift-snappy
+        hosting-base-path: snappy
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
+      uses: actions/upload-pages-artifact@v2
       with:
         path: ./public
 
@@ -51,4 +51,4 @@ jobs:
 
     steps:
     - name: Deploy Docs
-      uses: actions/deploy-pages@v1
+      uses: actions/deploy-pages@v2
