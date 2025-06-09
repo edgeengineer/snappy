@@ -14,8 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        swift: ["6.0.0"]
+        os: [ubuntu-latest, macos-latest]
+        swift: ["6.1"]
     steps:
     - uses: actions/checkout@v4
     - name: Setup Swift
