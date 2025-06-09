@@ -1,7 +1,6 @@
 # Snappy
 
-[![Tests](https://github.com/edgeengineer/snappy/actions/workflows/tests.yml/badge.svg)](https://github.com/edgeengineer/snappy/actions/workflows/tests.yml)
-[![Docs](https://github.com/edgeengineer/snappy/actions/workflows/deploy_docs.yml/badge.svg)](https://github.com/edgeengineer/snappy/actions/workflows/deploy_docs.yml)
+[![Swift](https://github.com/edgeengineer/snappy/actions/workflows/swift.yml/badge.svg)](https://github.com/edgeengineer/snappy/actions/workflows/swift.yml)
 ![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20visionOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg)
 
 This library is an implementation of Google's fast compression/decompression library Snappy in Swift. It supports iOS, macOS, visionOS, tvOS, watchOS, and Linux platforms.
